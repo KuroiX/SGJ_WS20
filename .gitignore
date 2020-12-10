@@ -58,3 +58,12 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Extra things added that are not part of https://github.com/github/gitignore/blob/master/Unity.gitignore
+
+# Jetbrain Rider Cache
+.idea/
+Assets/Plugins/Editor/JetBrains*
+
+# Visual Studio Code configuration
+.vscode/
+
