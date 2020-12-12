@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,16 +21,15 @@ public class ActionStation : MonoBehaviour
     }
 
     public Image[] images;
-    public Sprite[] actionSprites;
+    //public Sprite[] actionSprites;
 
     private List<Action> currentActions = new List<Action>();
     
     public void AddAction(Action action)
     {
-        images[currentActions.Count].sprite = actionSprites[currentActions.Count];
-        images[currentActions.Count].enabled = true;
-        currentActions.Add(action);
+        AddAction((int) action);
     }
+    
     
     public void AddAction(int i)
     {
@@ -39,7 +39,7 @@ public class ActionStation : MonoBehaviour
             return;
         }
         //Debug.Log("Current index: " + i);
-        images[currentActions.Count].sprite = actionSprites[i];
+        images[currentActions.Count].sprite = UIManager.Instance.sprites[i];
         images[currentActions.Count].enabled = true;
         currentActions.Add((Action)i);
         Debug.Log("Action added: " + (Action) i);
@@ -68,5 +68,19 @@ public class ActionStation : MonoBehaviour
         UIManager.Instance.SetUI(currentActions);
         Debug.Log("Queue committed");
         canvas.SetActive(false);
+    }
+
+    public GameObject child;
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        child.SetActive(true);
+        other.GetComponent<Player>().ArriveAtStation(this);
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        child.SetActive(false);
+        other.GetComponent<Player>().LeaveStation();
     }
 }
