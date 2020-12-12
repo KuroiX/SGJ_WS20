@@ -121,7 +121,7 @@ public class Player : MonoBehaviour
         }
 
         //jumpTimer += Time.deltaTime;
-        if (dashTimer < 0.3f)
+        if (isDashing && dashTimer < 0.3f)
         {
             dashTimer += Time.deltaTime;
             if (dashTimer >= 0.3f)
