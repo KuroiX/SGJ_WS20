@@ -38,24 +38,26 @@ public class Platform : MonoBehaviour
         {
             if (transform.position.y < maxHeight && direction == 1)
             {
-               rb.velocity = new Vector2(0, speed * direction);
+               //rb.velocity = new Vector2(0, speed * direction);
+               transform.Translate(Vector3.up*speed*Time.deltaTime);
             }
 
             if (transform.position.y >= maxHeight && direction == 1)
             {
-                rb.velocity = Vector2.zero;
+                //rb.velocity = Vector2.zero;
                 transform.position=new Vector3(transform.position.x, maxHeight, 0);
                 StartCoroutine(wait());
             }
             
             if (transform.position.y > minHeight && direction == -1)
             {
-               rb.velocity = new Vector2(0, speed * direction); 
+               //rb.velocity = new Vector2(0, speed * direction); 
+               transform.Translate(Vector3.down*speed*Time.deltaTime);
             }
 
             if (transform.position.y <= minHeight && direction == -1)
             {
-                rb.velocity = Vector2.zero;
+                //rb.velocity = Vector2.zero;
                 transform.position=new Vector3(transform.position.x, minHeight, 0);
                 StartCoroutine(wait());
             }
@@ -84,5 +86,10 @@ public class Platform : MonoBehaviour
         if (other.tag.Equals("Player"))
             other.transform.parent = gameObject.transform;
     }
-   
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag.Equals("Player"))
+            other.transform.parent = null;
+    }
 }
