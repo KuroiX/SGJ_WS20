@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     private Queue<Action> ActionQueue;
+    private List<Action> ActionList = new List<Action>();
     public float speed;
     public float jumpHeight;
     public float dashDistance;
@@ -203,6 +204,8 @@ public class Player : MonoBehaviour
     {
         transform.position = aStation.transform.position;
         rb.velocity = new Vector2(0, 0);
+        ResetQueue(ActionList);
+        UIManager.Instance.SetUI(ActionList);
         StartCoroutine(WaitAfterDeath());
     }
 
@@ -261,13 +264,22 @@ public class Player : MonoBehaviour
     public void ConfirmQueue(List<Action> actions)
     {
         ActionQueue.Clear();
+        ActionList.Clear();
+        for (int i = 0; i < actions.Count; i++)
+        {
+            ActionList.Add(actions[i]);
+            ActionQueue.Enqueue(actions[i]);
+        }
+        isInStation = false;
+    }
+    
+    public void ResetQueue(List<Action> actions)
+    {
+        ActionQueue.Clear();
         for (int i = 0; i < actions.Count; i++)
         {
             ActionQueue.Enqueue(actions[i]);
         }
-
-        isInStation = false;
-        // This function is called when the new queue gets confirmed
     }
 
     public void ArriveAtStation(ActionStation station)
