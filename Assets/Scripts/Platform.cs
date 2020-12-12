@@ -1,52 +1,81 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-
+    public float maxHeight;
+    public float minHeight;
+    public float waitTime;
+    public float startAfter;
     public float speed;
-    public float time;
-    private int direction = -1;
-    private bool isMoving = false;
+    public int direction;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        StartCoroutine(move());
-        isMoving = true;
-    }
+    private bool canStart = false;
+    private bool waiting = false;
+    //private int direction = 1;
 
-    // Update is called once per frame
-    void Update()
+    private Rigidbody2D rb;
+    private void Start()
     {
-        if (isMoving == true)
+        rb = gameObject.GetComponent<Rigidbody2D>();
+        StartCoroutine(StartAfter());
+        if(direction == 1)
         {
-            float amtToMove = speed * Time.deltaTime * direction;
-            transform.Translate(Vector3.right*amtToMove);
+            transform.position = new Vector3(transform.position.x, minHeight, 0);
         }
 
-        if (isMoving == false)
+        if (direction == -1)
         {
-            StartCoroutine(move());
+            transform.position = new Vector3(transform.position.x, maxHeight, 0);
         }
     }
 
-    IEnumerator move()
+    private void Update()
     {
-        isMoving = true;
-        float formerDirection = direction;
-        direction = 0;
-        yield return new WaitForSeconds(1f);
-        if (formerDirection == 1)
+        if (waiting == false && canStart)
         {
+            if (transform.position.y < maxHeight && direction == 1)
+            {
+               rb.velocity = new Vector2(0, speed * direction); 
+               Debug.Log("Fährt");
+            }
+
+            if (transform.position.y >= maxHeight && direction == 1)
+            {
+                rb.velocity = Vector2.zero;
+                Debug.Log("richtung: " + direction);
+                StartCoroutine(wait());
+            }
+            
+            if (transform.position.y > minHeight && direction == -1)
+            {
+               rb.velocity = new Vector2(0, speed * direction); 
+            }
+
+            if (transform.position.y <= minHeight && direction == -1)
+            {
+                rb.velocity = Vector2.zero;
+                StartCoroutine(wait());
+            }
+        }
+    }
+
+    IEnumerator StartAfter()
+    {
+        yield return new WaitForSeconds(startAfter);
+        canStart = true;
+    }
+
+    IEnumerator wait()
+    {
+        waiting = true;
+        if (direction == 1)
             direction = -1;
-        }
-        if (formerDirection == -1)
-        {
+        if (direction == -1)
             direction = 1;
-        }
-        yield return  new WaitForSeconds(time);
-        isMoving = false;
+        yield return new WaitForSeconds(waitTime);
+        waiting = false;
     }
 }
