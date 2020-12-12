@@ -20,6 +20,8 @@ public class UIManager : MonoBehaviour
 
     public void SetUI(List<Action> actions)
     {
+        ResetUI();
+        
         for (int i = 0; i < actions.Count; i++)
         {
             images[i].sprite = sprites[(int)actions[i]];
@@ -35,6 +37,15 @@ public class UIManager : MonoBehaviour
         // TODO: use the "used" sprite instead of null
         images[current].sprite = null;
         current++;
+    }
+
+    public void ResetUI()
+    {
+        for (int i = 0; i < images.Length; i++)
+        {
+            images[i].sprite = null;
+            images[i].enabled = false;
+        }
     }
     
 }

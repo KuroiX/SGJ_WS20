@@ -14,6 +14,7 @@ public class ActionStation : MonoBehaviour
     public void ActivateActionStation(Player player)
     {
         ResetActions();
+        UIManager.Instance.playerUI.SetActive(false);
         this.player = player;
         canvas.SetActive(true);
     }
@@ -62,6 +63,8 @@ public class ActionStation : MonoBehaviour
     public void CommitQueue()
     {
         player.ConfirmQueue(currentActions);
+        UIManager.Instance.playerUI.SetActive(true);
+        UIManager.Instance.SetUI(currentActions);
         Debug.Log("Queue committed");
         canvas.SetActive(false);
     }
