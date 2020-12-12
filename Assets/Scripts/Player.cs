@@ -76,11 +76,11 @@ public class Player : MonoBehaviour
                     sr.flipX = true;
                 }
 
-                float amtToMove = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+                amtToMove = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
 
                 //if (!IsGrounded()) amtToMove *= 0.8f;
                 //rb.AddForce(Vector3.right * amtToMove);
-                rb.velocity = new Vector2(amtToMove, rb.velocity.y);
+                
                 //rb.MovePosition(rb.transform.position + (Vector3.right * amtToMove));
                 //transform.Translate(Vector3.right * amtToMove);
             }
@@ -103,9 +103,9 @@ public class Player : MonoBehaviour
                         UIManager.Instance.GoNext();
 
                         if (action == Action.Jump)
-                            jump();
+                            jumpActivated = true;
                         if (action == Action.Dash)
-                            dash();
+                            dashActivated = true;
                     }
                     
                 }
@@ -113,6 +113,29 @@ public class Player : MonoBehaviour
         }
 
         //jumpTimer += Time.deltaTime;
+    }
+
+    private bool jumpActivated;
+    private bool dashActivated;
+    private float amtToMove;
+    void FixedUpdate()
+    {
+        if (jumpActivated)
+        {
+            jump();
+            jumpActivated = false;
+        }
+        if (dashActivated)
+        {
+            dash();
+            dashActivated = false;
+        }
+
+        if (!action)
+        {
+            rb.velocity = new Vector2(amtToMove, rb.velocity.y);
+        }
+        
     }
 
     bool IsGrounded()
