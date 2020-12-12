@@ -18,7 +18,6 @@ public class Player : MonoBehaviour
     private ActionStation aStation;
     private bool hasStation = false;
     private bool isInStation = false;
-    public Text text;
 
     // Start is called before the first frame update
     void Start()
@@ -26,13 +25,43 @@ public class Player : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
         ActionQueue = new Queue<Action>();
-        text.enabled = false;
+        ActionQueue.Enqueue(Action.Jump);
+        ActionQueue.Enqueue(Action.Dash);
+        ActionQueue.Enqueue(Action.Jump);
+        ActionQueue.Enqueue(Action.Dash);
+        ActionQueue.Enqueue(Action.Jump);
+        ActionQueue.Enqueue(Action.Dash);
+        ActionQueue.Enqueue(Action.Jump);
+        ActionQueue.Enqueue(Action.Dash);
+        ActionQueue.Enqueue(Action.Jump);
+        ActionQueue.Enqueue(Action.Dash);
+        ActionQueue.Enqueue(Action.Jump);
+        ActionQueue.Enqueue(Action.Dash);
+        ActionQueue.Enqueue(Action.Jump);
+        ActionQueue.Enqueue(Action.Dash);
+        ActionQueue.Enqueue(Action.Jump);
+        ActionQueue.Enqueue(Action.Dash);
+        ActionQueue.Enqueue(Action.Jump);
+        ActionQueue.Enqueue(Action.Dash);
+        ActionQueue.Enqueue(Action.Jump);
+        ActionQueue.Enqueue(Action.Dash);
+        ActionQueue.Enqueue(Action.Jump);
+        ActionQueue.Enqueue(Action.Dash);
+        ActionQueue.Enqueue(Action.Jump);
+        ActionQueue.Enqueue(Action.Dash);
+        ActionQueue.Enqueue(Action.Jump);
+        ActionQueue.Enqueue(Action.Dash);
+        ActionQueue.Enqueue(Action.Jump);
+        ActionQueue.Enqueue(Action.Dash);
+        ActionQueue.Enqueue(Action.Jump);
+        ActionQueue.Enqueue(Action.Dash);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!isInStation){
+        if (!isInStation)
+        {
             if (action == false)
             {
                 if (Input.GetAxis("Horizontal") > 0)
@@ -48,7 +77,12 @@ public class Player : MonoBehaviour
                 }
 
                 float amtToMove = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-                transform.Translate(Vector3.right * amtToMove);
+
+                //if (!IsGrounded()) amtToMove *= 0.8f;
+                //rb.AddForce(Vector3.right * amtToMove);
+                rb.velocity = new Vector2(amtToMove, rb.velocity.y);
+                //rb.MovePosition(rb.transform.position + (Vector3.right * amtToMove));
+                //transform.Translate(Vector3.right * amtToMove);
             }
 
             if (Input.GetButtonDown("Jump") && action == false)
@@ -60,7 +94,10 @@ public class Player : MonoBehaviour
                 }
                 else
                 {
-                    if(ActionQueue.Count != 0)
+                    //jump();
+                    
+                    
+                    if (ActionQueue.Count != 0)
                     {
                         Action action = ActionQueue.Dequeue();
 
@@ -69,20 +106,37 @@ public class Player : MonoBehaviour
                         if (action == Action.Dash)
                             dash();
                     }
+                    
                 }
             }
         }
-        
+
+        //jumpTimer += Time.deltaTime;
     }
 
+    bool IsGrounded()
+    {
+        if (rb.velocity.y == 0f)
+        {
+            Debug.Log("Grounded");
+            return true;
+        }
+        return false;
+    }
+
+    //private float jumpTimer = 0.5f;
     void jump()
     {
+        Debug.Log("Jumped");
+        //jumpTimer = 0f;
+        rb.velocity = new Vector2(rb.velocity.x, 0);
         //StartCoroutine(jumpTime());
         rb.AddForce(new Vector2(0, jumpHeight));
     }
 
     void dash()
     {
+        Debug.Log("Dashed");
         StartCoroutine(dashTime());
     }
 
@@ -136,18 +190,15 @@ public class Player : MonoBehaviour
         isInStation = false;
         // This function is called when the new queue gets confirmed
     }
-    
     private void OnTriggerEnter2D(Collider2D other)
     {
         aStation = other.GetComponent<ActionStation>();
         hasStation = true;
-        text.enabled = true;
     }
     private void OnTriggerExit2D(Collider2D other)
     {
         //aStation = null;
         hasStation = false;
-        text.enabled = false;
     }
     
     #endregion
