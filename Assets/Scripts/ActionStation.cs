@@ -39,6 +39,8 @@ public class ActionStation : MonoBehaviour
         PrintButtonCount();
 
         deactivatedBlock.normalColor = Color.grey;
+
+        mainCamera = Camera.main;
     }
 
     void PrintButtonCount()
@@ -152,5 +154,36 @@ public class ActionStation : MonoBehaviour
     {
         child.SetActive(false);
         other.GetComponent<Player>().LeaveStation();
+    }
+
+    public GameObject HelpText;
+    private bool activity = false;
+    public void Help()
+    {
+        HelpText.SetActive(!activity);
+        activity = !activity;
+    }
+
+    [Header("This is so ugly but for camera")]
+    public Camera currentCamera;
+    public GameObject actionPanel;
+    public Image stationPanelImage;
+    public Image queuePanelImage;
+    public GameObject backButton;
+    
+    private Camera mainCamera;
+    private bool overviewEnabled = false;
+    
+    public void SwitchCameras()
+    {
+        mainCamera.enabled = overviewEnabled;
+        actionPanel.SetActive(overviewEnabled);
+        stationPanelImage.enabled = overviewEnabled;
+        
+        currentCamera.enabled = !overviewEnabled;
+        queuePanelImage.enabled = !overviewEnabled;
+        backButton.SetActive(!overviewEnabled);
+
+        overviewEnabled = !overviewEnabled;
     }
 }
