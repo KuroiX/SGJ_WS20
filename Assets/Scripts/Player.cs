@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private int direction = 1;
     private SpriteRenderer sr;
     private ActionStation aStation;
+    private Vector3 startPosition;
     private bool hasStation = false;
     private bool isInStation = false;
 
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
         ActionQueue = new Queue<Action>();
+        startPosition = transform.position;
         ActionQueue.Enqueue(Action.Jump);
         ActionQueue.Enqueue(Action.Dash);
         ActionQueue.Enqueue(Action.Jump);
@@ -202,7 +204,16 @@ public class Player : MonoBehaviour
 
     public void OnDeath()
     {
-        transform.position = aStation.transform.position;
+        // TODO:
+        if (aStation == null)
+        {
+            transform.position = startPosition;
+        }
+        else
+        {
+            transform.position = aStation.transform.position;
+        }
+       
         rb.velocity = new Vector2(0, 0);
         ResetQueue(ActionList);
         UIManager.Instance.SetUI(ActionList);
