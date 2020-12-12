@@ -5,16 +5,87 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Queue<Action> ActionQueue;
+    public float speed;
+    public float jumpHeight;
+    public float dashDistance;
+    private Rigidbody2D rb;
+    private bool action = false;
+    private int direction = 1;
+    private SpriteRenderer sr;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = gameObject.GetComponent<Rigidbody2D>();
+        sr = gameObject.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(action == false)
+        {
+            if (Input.GetAxis("Horizontal") > 0)
+            {
+                direction = 1;
+                sr.flipX = false;
+            }
+
+            if (Input.GetAxis("Horizontal") < 0)
+            {
+                direction = -1;
+                sr.flipX = true;
+            }
+
+            float amtToMove = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+            transform.Translate(Vector3.right * amtToMove);
+        }
         
+        if (Input.GetButtonDown("Jump") && action == false)
+        {
+            /*Action action = ActionQueue.Dequeue();
+            if (action == Action.Jump)
+                jump();
+            if (action == Action.Dash)
+                dash();*/
+            
+            jump();
+        }
+        if(Input.GetButtonDown("Fire1") && action == false)
+            dash();
+    }
+
+    void jump()
+    {
+        //StartCoroutine(jumpTime());
+        rb.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
+    }
+
+    void dash()
+    {
+        StartCoroutine(dashTime());
+    }
+
+    IEnumerator jumpTime()
+    {
+        action = true;
+        rb.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
+        Debug.Log("Jump start");
+        yield return new WaitForSeconds(0.3f);
+        Debug.Log("jump end");
+        action = false;
+    }
+
+    IEnumerator dashTime()
+    {
+        action = true;
+        rb.velocity = new Vector2(0, 0);
+        rb.AddForce(new Vector2(dashDistance * direction, 0), ForceMode2D.Impulse);
+        rb.gravityScale = 0;
+        Debug.Log("Geht");
+        yield return new WaitForSeconds(0.3f);
+        rb.velocity = new Vector2(0, 0);
+        rb.gravityScale = 1;
+        action = false;
     }
 }
