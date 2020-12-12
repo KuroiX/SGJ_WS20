@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class ActionStation : MonoBehaviour
 {
+    [HideInInspector]
     public Player player;
 
-    public GameObject canvas;
+    [SerializeField]
+    private GameObject canvas;
 
     public void ActivateActionStation(Player player)
     {
@@ -34,7 +36,7 @@ public class ActionStation : MonoBehaviour
             Debug.Log("Queue is full!");
             return;
         }
-        images[currentActions.Count].sprite = actionSprites[currentActions.Count];
+        images[currentActions.Count].sprite = actionSprites[i];
         images[currentActions.Count].enabled = true;
         currentActions.Add((Action)i);
         Debug.Log("Action added: " + (Action) i);
@@ -58,10 +60,7 @@ public class ActionStation : MonoBehaviour
 
     public void CommitQueue()
     {
-        for (int i = 0; i < currentActions.Count; i++)
-        {
-            //player.ActionQueue.Enqueue(currentActions[i]);
-        }
+        player.ConfirmQueue(currentActions);
         Debug.Log("Queue committed");
         canvas.SetActive(false);
     }
