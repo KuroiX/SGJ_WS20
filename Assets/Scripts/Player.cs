@@ -111,10 +111,17 @@ public class Player : MonoBehaviour
                     }
                     
                 }
+            } else if (Input.GetButtonDown("Jump") && isDashing && ActionQueue.Peek() == Action.Jump)
+            {
+                StopDash();
+                Action action = ActionQueue.Dequeue();
+                UIManager.Instance.GoNext(action);
+                jumpActivated = true;
             }
         }
 
         //jumpTimer += Time.deltaTime;
+        dashTimer += Time.deltaTime;
     }
 
     private bool jumpActivated;
@@ -190,17 +197,32 @@ public class Player : MonoBehaviour
         action = false;
     }
 
+    private bool isDashing;
+    private float dashTimer;
     IEnumerator dashTime()
     {
+        dashTimer = 0f;
+        isDashing = true;
         action = true;
         rb.velocity = new Vector2(0, 0);
         rb.AddForce(new Vector2(dashDistance * direction, 0), ForceMode2D.Impulse);
         rb.gravityScale = 0;
-        Debug.Log("Geht");
+        //Debug.Log("Geht");
         yield return new WaitForSeconds(0.3f);
-        rb.velocity = new Vector2(0, 0);
+        if (isDashing)
+        {
+            StopDash();
+        }
+        
+    }
+
+    void StopDash()
+    {
+        rb.velocity = Vector2.zero;
         rb.gravityScale = 1;
         action = false;
+        isDashing = false;
+        Debug.Log(dashTimer);
     }
 
     #region ActionStation
