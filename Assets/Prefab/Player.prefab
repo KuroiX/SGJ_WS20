@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5ca89f6bdf42c40bb092935e357104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 800
+  speed: 2
   jumpHeight: 200
   dashDistance: 8
   fallMultiplier: 2

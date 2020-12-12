@@ -37,8 +37,11 @@ public class UIManager : MonoBehaviour
     public void GoNext()
     {
         // TODO: use the "used" sprite instead of null
-        images[current].sprite = null;
-        current++;
+        if (current < images.Length)
+        {
+            images[current].sprite = null;
+            current++;
+        }
     }
 
     public void ResetUI()

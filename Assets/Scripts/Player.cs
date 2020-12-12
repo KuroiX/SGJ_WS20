@@ -89,6 +89,8 @@ public class Player : MonoBehaviour
             {
                 if (hasStation)
                 {
+                    rb.velocity = Vector2.zero;
+                    amtToMove = 0;
                     aStation.ActivateActionStation(this);
                     isInStation = true;
                 }

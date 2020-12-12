@@ -628,9 +628,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4a6e1e9d7338d459f355e275af84fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerUI: {fileID: 0}
-  images: []
-  sprites: []
+  playerUI: {fileID: 1548591633}
+  images:
+  - {fileID: 3542769356512566931}
+  - {fileID: 8897037250667429173}
+  - {fileID: 7657061266035163339}
+  - {fileID: 6515417693697355062}
+  - {fileID: 1448388892836673211}
+  - {fileID: 622194319953665905}
+  - {fileID: 8209666654329398807}
+  sprites:
+  - {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1 &5011546407530518905
 GameObject:
   m_ObjectHideFlags: 0
