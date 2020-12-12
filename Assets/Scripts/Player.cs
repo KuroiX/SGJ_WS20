@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,9 @@ public class Player : MonoBehaviour
     private bool action = false;
     private int direction = 1;
     private SpriteRenderer sr;
-    
+    private ActionStation aStation;
+    private bool hasStation = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +26,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(action == false)
+        if (action == false)
         {
             if (Input.GetAxis("Horizontal") > 0)
             {
@@ -40,20 +43,22 @@ public class Player : MonoBehaviour
             float amtToMove = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
             transform.Translate(Vector3.right * amtToMove);
         }
-        
+
         if (Input.GetButtonDown("Jump") && action == false)
         {
-            /*Action action = ActionQueue.Dequeue();
-            if (action == Action.Jump)
-                jump();
-            if (action == Action.Dash)
-                dash();*/
+            if (hasStation)
+                aStation.ActivateActionStation(this);
+            else
+            {
+                Action action = ActionQueue.Dequeue();
+                if (action == Action.Jump)
+                    jump();
+                if (action == Action.Dash)
+                    dash();
+            }
             
-            jump();
         }
-        if(Input.GetButtonDown("Fire1") && action == false)
-            dash();
-    }
+        }
 
     void jump()
     {
@@ -87,5 +92,17 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector2(0, 0);
         rb.gravityScale = 1;
         action = false;
+    }
+
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        aStation = other.GetComponent<ActionStation>();
+        hasStation = true;
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        aStation = null;
+        hasStation = false;
     }
 }
