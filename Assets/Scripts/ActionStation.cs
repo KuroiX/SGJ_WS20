@@ -12,6 +12,47 @@ public class ActionStation : MonoBehaviour
     [SerializeField]
     private GameObject canvas;
 
+    public Text jumpCounter;
+    public Text dashCounter;
+
+    public Button jumpButton;
+    public Button dashButton;
+
+    public int jumpCount;
+    public int dashCount;
+
+    private int currentJumpCount;
+    private int currentDashCount;
+
+    private ColorBlock activatedBlock;
+    private ColorBlock deactivatedBlock;
+
+    public void Start()
+    {
+        ResetCounter();
+        activatedBlock = jumpButton.colors;
+        deactivatedBlock = jumpButton.colors;
+        
+        Debug.Log(activatedBlock);
+        Debug.Log(deactivatedBlock);
+
+        PrintButtonCount();
+
+        deactivatedBlock.normalColor = Color.grey;
+    }
+
+    void PrintButtonCount()
+    {
+        jumpCounter.text = "Jump x" + currentJumpCount; 
+        dashCounter.text = "Dash x" + currentDashCount; 
+    }
+
+    void ResetCounter()
+    {
+        currentJumpCount = jumpCount;
+        currentDashCount = dashCount;
+    }
+
     public void ActivateActionStation(Player player)
     {
         ResetActions();
@@ -42,8 +83,30 @@ public class ActionStation : MonoBehaviour
         images[currentActions.Count].sprite = UIManager.Instance.sprites[i];
         images[currentActions.Count].enabled = true;
         currentActions.Add((Action)i);
+        if ((Action) i == Action.Jump)
+        {
+            currentJumpCount--;
+            PrintButtonCount();
+            if (currentJumpCount == 0)
+            {
+                jumpButton.enabled = false;
+                jumpButton.colors = deactivatedBlock;
+            }
+        } 
+        else if ((Action) i == Action.Dash)
+        {
+            currentDashCount--;
+            PrintButtonCount();
+            if (currentDashCount == 0)
+            {
+                Debug.Log("Dash is empty");
+                dashButton.enabled = false;
+                dashButton.colors = deactivatedBlock;
+            }
+        }
         Debug.Log("Action added: " + (Action) i);
     }
+    
 
     public void ResetActions()
     {
@@ -53,6 +116,13 @@ public class ActionStation : MonoBehaviour
             images[i].sprite = null;
             images[i].enabled = false;
         }
+
+        jumpButton.enabled = true;
+        jumpButton.colors = activatedBlock;
+        dashButton.enabled = true;
+        dashButton.colors = activatedBlock;
+        ResetCounter();
+        PrintButtonCount();
         Debug.Log("Actions reset");
     }
 

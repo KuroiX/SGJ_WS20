@@ -209,6 +209,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   canvas: {fileID: 7884157539072012890}
+  jumpCounter: {fileID: 7884157538894980307}
+  dashCounter: {fileID: 7884157537320144074}
+  jumpButton: {fileID: 7884157538297273904}
+  dashButton: {fileID: 7884157537337895164}
+  jumpCount: 2
+  dashCount: 2
   images:
   - {fileID: 7884157537602285760}
   - {fileID: 7884157538644991929}
@@ -551,7 +557,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7884157537319362812
 RectTransform:
   m_ObjectHideFlags: 0
@@ -957,7 +963,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7884157537678039047
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2753,7 +2759,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7884157539072012894
 RectTransform:
   m_ObjectHideFlags: 0
