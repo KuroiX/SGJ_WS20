@@ -34,7 +34,7 @@ public class ActionStation : MonoBehaviour
             Debug.Log("Queue is full!");
             return;
         }
-        images[currentActions.Count].sprite = actionSprites[currentActions.Count];
+        images[currentActions.Count].sprite = actionSprites[i];
         images[currentActions.Count].enabled = true;
         currentActions.Add((Action)i);
         Debug.Log("Action added: " + (Action) i);
