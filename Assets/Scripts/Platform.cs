@@ -38,14 +38,12 @@ public class Platform : MonoBehaviour
         {
             if (transform.position.y < maxHeight && direction == 1)
             {
-               rb.velocity = new Vector2(0, speed * direction); 
-               Debug.Log("Fährt");
+               rb.velocity = new Vector2(0, speed * direction);
             }
 
             if (transform.position.y >= maxHeight && direction == 1)
             {
                 rb.velocity = Vector2.zero;
-                Debug.Log("richtung: " + direction);
                 StartCoroutine(wait());
             }
             
@@ -71,11 +69,11 @@ public class Platform : MonoBehaviour
     IEnumerator wait()
     {
         waiting = true;
+        yield return new WaitForSeconds(waitTime);
         if (direction == 1)
             direction = -1;
-        if (direction == -1)
+        else if (direction == -1)
             direction = 1;
-        yield return new WaitForSeconds(waitTime);
         waiting = false;
     }
 }
