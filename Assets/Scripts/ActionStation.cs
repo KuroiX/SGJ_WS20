@@ -13,6 +13,7 @@ public class ActionStation : MonoBehaviour
 
     public void ActivateActionStation(Player player)
     {
+        ResetActions();
         this.player = player;
         canvas.SetActive(true);
     }
