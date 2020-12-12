@@ -121,12 +121,23 @@ public class Player : MonoBehaviour
         }
 
         //jumpTimer += Time.deltaTime;
-        dashTimer += Time.deltaTime;
+        if (dashTimer < 0.3f)
+        {
+            dashTimer += Time.deltaTime;
+            if (dashTimer >= 0.3f)
+            {
+                StopDash();
+            }
+        }
+        
     }
 
     private bool jumpActivated;
     private bool dashActivated;
     private float amtToMove;
+    public float startValue;
+    public float newFallSpeed;
+    public float maxFallSpeed;
     void FixedUpdate()
     {
         if (jumpActivated)
@@ -143,6 +154,20 @@ public class Player : MonoBehaviour
         if (!action)
         {
             rb.velocity = new Vector2(amtToMove, rb.velocity.y);
+        }
+
+        // Async jump
+        if (rb.velocity.y < 0f)
+        {
+            Vector2 newVel = rb.velocity + Physics2D.gravity * newFallSpeed * Time.fixedDeltaTime;
+            if (newVel.y < maxFallSpeed)
+            {
+                newVel = new Vector2(newVel.x, maxFallSpeed);
+                Debug.Log("Max speed reached");
+            }
+
+            Debug.Log("Set new Velocity");
+            rb.velocity = newVel;
         }
         
     }
@@ -170,7 +195,8 @@ public class Player : MonoBehaviour
     void dash()
     {
         Debug.Log("Dashed");
-        StartCoroutine(dashTime());
+        StartDash();
+        //StartCoroutine(dashTime());
     }
 
     public void OnDeath()
@@ -201,12 +227,7 @@ public class Player : MonoBehaviour
     private float dashTimer;
     IEnumerator dashTime()
     {
-        dashTimer = 0f;
-        isDashing = true;
-        action = true;
-        rb.velocity = new Vector2(0, 0);
-        rb.AddForce(new Vector2(dashDistance * direction, 0), ForceMode2D.Impulse);
-        rb.gravityScale = 0;
+        StartDash();
         //Debug.Log("Geht");
         yield return new WaitForSeconds(0.3f);
         if (isDashing)
@@ -214,6 +235,16 @@ public class Player : MonoBehaviour
             StopDash();
         }
         
+    }
+
+    void StartDash()
+    {
+        dashTimer = 0f;
+        isDashing = true;
+        action = true;
+        rb.velocity = new Vector2(0, 0);
+        rb.AddForce(new Vector2(dashDistance * direction, 0), ForceMode2D.Impulse);
+        rb.gravityScale = 0;
     }
 
     void StopDash()
