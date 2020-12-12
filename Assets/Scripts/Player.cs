@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
                     sr.flipX = true;
                 }
 
-                amtToMove = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+                amtToMove = Input.GetAxis("Horizontal") * speed;
 
                 //if (!IsGrounded()) amtToMove *= 0.8f;
                 //rb.AddForce(Vector3.right * amtToMove);
