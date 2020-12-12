@@ -100,6 +100,7 @@ public class Player : MonoBehaviour
                     if (ActionQueue.Count != 0)
                     {
                         Action action = ActionQueue.Dequeue();
+                        UIManager.Instance.GoNext();
 
                         if (action == Action.Jump)
                             jump();

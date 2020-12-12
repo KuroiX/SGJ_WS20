@@ -25,9 +25,11 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < actions.Count; i++)
         {
             images[i].sprite = sprites[(int)actions[i]];
+            images[i].enabled = true;
         }
 
         current = 0;
+        Debug.Log("UI set");
     }
 
     private int current;
