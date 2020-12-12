@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Queue<Action> ActionQueue;
+    private Queue<Action> ActionQueue;
     public float speed;
     public float jumpHeight;
     public float dashDistance;
@@ -58,7 +58,8 @@ public class Player : MonoBehaviour
             }
             
         }
-        }
+        
+    }
 
     void jump()
     {
@@ -94,6 +95,19 @@ public class Player : MonoBehaviour
         action = false;
     }
 
+    #region ActionStation
+
+    public void ConfirmQueue(List<Action> actions)
+    {
+        ActionQueue.Clear();
+        for (int i = 0; i < actions.Count; i++)
+        {
+            ActionQueue.Enqueue(actions[i]);
+        }
+        
+        // TODO: Daki
+        // This function is called when the new queue gets confirmed
+    }
     
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -105,4 +119,6 @@ public class Player : MonoBehaviour
         aStation = null;
         hasStation = false;
     }
+    
+    #endregion
 }

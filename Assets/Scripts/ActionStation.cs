@@ -60,10 +60,7 @@ public class ActionStation : MonoBehaviour
 
     public void CommitQueue()
     {
-        for (int i = 0; i < currentActions.Count; i++)
-        {
-            //player.ActionQueue.Enqueue(currentActions[i]);
-        }
+        player.ConfirmQueue(currentActions);
         Debug.Log("Queue committed");
         canvas.SetActive(false);
     }
