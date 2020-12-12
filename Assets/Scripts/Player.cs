@@ -89,6 +89,8 @@ public class Player : MonoBehaviour
             {
                 if (hasStation)
                 {
+                    rb.velocity = Vector2.zero;
+                    amtToMove = 0;
                     aStation.ActivateActionStation(this);
                     isInStation = true;
                 }
@@ -100,7 +102,7 @@ public class Player : MonoBehaviour
                     if (ActionQueue.Count != 0)
                     {
                         Action action = ActionQueue.Dequeue();
-                        UIManager.Instance.GoNext();
+                        UIManager.Instance.GoNext(action);
 
                         if (action == Action.Jump)
                             jumpActivated = true;
@@ -214,16 +216,18 @@ public class Player : MonoBehaviour
         isInStation = false;
         // This function is called when the new queue gets confirmed
     }
-    private void OnTriggerEnter2D(Collider2D other)
+
+    public void ArriveAtStation(ActionStation station)
     {
-        aStation = other.GetComponent<ActionStation>();
+        aStation = station;
         hasStation = true;
     }
-    private void OnTriggerExit2D(Collider2D other)
+
+    public void LeaveStation()
     {
-        //aStation = null;
         hasStation = false;
     }
+    
     
     #endregion
 }

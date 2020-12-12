@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     
     public Image[] images;
     public Sprite[] sprites;
+    public Sprite[] usedSprites;
     
     private void Awake()
     {
@@ -34,11 +35,14 @@ public class UIManager : MonoBehaviour
 
     private int current;
     
-    public void GoNext()
+    public void GoNext(Action action)
     {
         // TODO: use the "used" sprite instead of null
-        images[current].sprite = null;
-        current++;
+        if (current < images.Length)
+        {
+            images[current].sprite = usedSprites[(int)action];
+            current++;
+        }
     }
 
     public void ResetUI()
