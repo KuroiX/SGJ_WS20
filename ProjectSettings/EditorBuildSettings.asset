@@ -5,10 +5,17 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+<<<<<<< HEAD
+  - enabled: 0
+=======
   - enabled: 1
     path: Assets/Scenes/Introduction.unity
     guid: d1f0fb07b507fa240b4711568ec8cd11
   - enabled: 1
+>>>>>>> kuroi_new
     path: Assets/Scenes/SceneDaki.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: 2cf7c7992b39ea646b6dc13d056c1b3c
   m_configObjects: {}
