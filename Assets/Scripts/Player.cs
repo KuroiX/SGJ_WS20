@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     private ActionStation aStation;
     private bool hasStation = false;
     private bool isInStation = false;
+    public Text text;
 
     // Start is called before the first frame update
     void Start()
@@ -24,13 +26,12 @@ public class Player : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
         ActionQueue = new Queue<Action>();
+        text.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (rb.velocity.y < 0)
-            rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
         if(!isInStation){
             if (action == false)
             {
@@ -85,6 +86,20 @@ public class Player : MonoBehaviour
         StartCoroutine(dashTime());
     }
 
+    public void OnDeath()
+    {
+        transform.position = aStation.transform.position;
+        rb.velocity = new Vector2(0, 0);
+        StartCoroutine(WaitAfterDeath());
+    }
+
+    IEnumerator WaitAfterDeath()
+    {
+        action = true;
+        yield return new WaitForSeconds(0.5f);
+        action = false;
+    }
+
     IEnumerator jumpTime()
     {
         action = true;
@@ -126,11 +141,13 @@ public class Player : MonoBehaviour
     {
         aStation = other.GetComponent<ActionStation>();
         hasStation = true;
+        text.enabled = true;
     }
     private void OnTriggerExit2D(Collider2D other)
     {
-        aStation = null;
+        //aStation = null;
         hasStation = false;
+        text.enabled = false;
     }
     
     #endregion
