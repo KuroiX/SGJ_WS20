@@ -9,54 +9,67 @@ public class Player : MonoBehaviour
     public float speed;
     public float jumpHeight;
     public float dashDistance;
+    public float fallMultiplier;
     private Rigidbody2D rb;
     private bool action = false;
     private int direction = 1;
     private SpriteRenderer sr;
     private ActionStation aStation;
     private bool hasStation = false;
+    private bool isInStation = false;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
+        ActionQueue = new Queue<Action>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (action == false)
-        {
-            if (Input.GetAxis("Horizontal") > 0)
+        if (rb.velocity.y < 0)
+            rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+        if(!isInStation){
+            if (action == false)
             {
-                direction = 1;
-                sr.flipX = false;
+                if (Input.GetAxis("Horizontal") > 0)
+                {
+                    direction = 1;
+                    sr.flipX = false;
+                }
+
+                if (Input.GetAxis("Horizontal") < 0)
+                {
+                    direction = -1;
+                    sr.flipX = true;
+                }
+
+                float amtToMove = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+                transform.Translate(Vector3.right * amtToMove);
             }
 
-            if (Input.GetAxis("Horizontal") < 0)
+            if (Input.GetButtonDown("Jump") && action == false)
             {
-                direction = -1;
-                sr.flipX = true;
-            }
+                if (hasStation)
+                {
+                    aStation.ActivateActionStation(this);
+                    isInStation = true;
+                }
+                else
+                {
+                    if(ActionQueue.Count != 0)
+                    {
+                        Action action = ActionQueue.Dequeue();
 
-            float amtToMove = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-            transform.Translate(Vector3.right * amtToMove);
-        }
-
-        if (Input.GetButtonDown("Jump") && action == false)
-        {
-            if (hasStation)
-                aStation.ActivateActionStation(this);
-            else
-            {
-                Action action = ActionQueue.Dequeue();
-                if (action == Action.Jump)
-                    jump();
-                if (action == Action.Dash)
-                    dash();
+                        if (action == Action.Jump)
+                            jump();
+                        if (action == Action.Dash)
+                            dash();
+                    }
+                }
             }
-            
         }
         
     }
@@ -64,7 +77,7 @@ public class Player : MonoBehaviour
     void jump()
     {
         //StartCoroutine(jumpTime());
-        rb.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(0, jumpHeight));
     }
 
     void dash()
@@ -104,8 +117,8 @@ public class Player : MonoBehaviour
         {
             ActionQueue.Enqueue(actions[i]);
         }
-        
-        // TODO: Daki
+
+        isInStation = false;
         // This function is called when the new queue gets confirmed
     }
     
