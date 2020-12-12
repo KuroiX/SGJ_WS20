@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class ActionStation : MonoBehaviour
 {
+    [HideInInspector]
     public Player player;
 
-    public GameObject canvas;
+    [SerializeField]
+    private GameObject canvas;
 
     public void ActivateActionStation(Player player)
     {
