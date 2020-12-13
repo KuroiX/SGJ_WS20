@@ -1712,12 +1712,12 @@ PrefabInstance:
       value: 'As you could see, the order you pick your actions is very important.
         Figuring out the right order is crucial to succeeding in this broken environment.
         To help you with that, you can click on the "Overview" button. If the overview
-        is not enough to get over the obstacle, the "Help" button will tell you a
-        sequence that can be used to clear it.
+        is not enough to get over the obstacle, the "Help" button will give you a
+        hint that can be used to clear it.
 
 
-        By the way, you can always
-        jump in mid-air if you have a jump left!'
+        By the way, you can always jump
+        in mid-air if you have a jump left!'
       objectReference: {fileID: 0}
     - target: {fileID: 1413588140649646561, guid: a1ff581528126504a9d181db2af0257c, type: 3}
       propertyPath: m_Enabled
@@ -2596,14 +2596,14 @@ MonoBehaviour:
   m_Text: 'Hi there!
 
     Unfortunately, this game is kind of broken. The graphics
-    won''t load properly, there is no music and the inputs don''t work either. There
-    is only one button that can be used to perform an action.
+    won''t load properly, there is no music and the inputs don''t work either. You
+    can use only one button to perform actions because the other buttons are malfunctioning.
 
 
-    But worry not.
-    Stations like this one can be used to queue up different actions that will be
-    binded to the action button. You can then perform different actions with the
-    same button!
+    But
+    worry not. Stations like this one can be used to queue up different actions that
+    will be binded to the action button. You can then perform different actions with
+    the same button!
 
     You will find more information at the next station.
 
