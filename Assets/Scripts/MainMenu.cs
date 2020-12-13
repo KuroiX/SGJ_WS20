@@ -26,6 +26,7 @@ public class MainMenu : MonoBehaviour
     {
         // TODO: exit game
         Debug.Log("Exit game");
+        Application.Quit();
     }
 
     public void SetMenu(bool value)
