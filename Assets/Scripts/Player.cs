@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
         sr = gameObject.GetComponent<SpriteRenderer>();
         ActionQueue = new Queue<Action>();
         startPosition = transform.position;
+        /*
         ActionQueue.Enqueue(Action.Jump);
         ActionQueue.Enqueue(Action.Dash);
         ActionQueue.Enqueue(Action.Jump);
@@ -58,6 +59,7 @@ public class Player : MonoBehaviour
         ActionQueue.Enqueue(Action.Dash);
         ActionQueue.Enqueue(Action.Jump);
         ActionQueue.Enqueue(Action.Dash);
+        */
     }
 
     // Update is called once per frame
@@ -223,7 +225,7 @@ public class Player : MonoBehaviour
     IEnumerator WaitAfterDeath()
     {
         action = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         action = false;
     }
 
