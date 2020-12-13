@@ -638,11 +638,11 @@ MonoBehaviour:
   - {fileID: 622194319953665905}
   - {fileID: 8209666654329398807}
   sprites:
-  - {fileID: 21300000, guid: 7378958a458111e4bbbb2b37480cc9d3, type: 3}
-  - {fileID: 21300000, guid: 7f0ed8169f5624f4e90ae027f245cf38, type: 3}
+  - {fileID: 21300000, guid: dfe0e3cebb5e0e049b770ce5c657e50e, type: 3}
+  - {fileID: 21300000, guid: 0de62d945b198f946aa0047b86d0ec4d, type: 3}
   usedSprites:
-  - {fileID: 21300000, guid: 38794f3138709ab489cae1717aca86f6, type: 3}
-  - {fileID: 21300000, guid: 2e60179cee3157c419a48d57fe2d3701, type: 3}
+  - {fileID: 21300000, guid: aa197c7cddaa99f45b7c29d1f9c87504, type: 3}
+  - {fileID: 21300000, guid: f71baba18a4667b4c877560ac7d88459, type: 3}
 --- !u!1 &5011546407530518905
 GameObject:
   m_ObjectHideFlags: 0

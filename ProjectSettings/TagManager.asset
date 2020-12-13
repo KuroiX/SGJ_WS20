@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Hazard
+    uniqueID: 606281665
+    locked: 0
+  - name: Environment
+    uniqueID: 967714519
+    locked: 0
+  - name: Player
+    uniqueID: 3367898243
+    locked: 0
