@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -67,6 +68,9 @@ public class Player : MonoBehaviour
     {
         if (!isInStation)
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+                SceneManager.LoadScene(0);
+            
             if (action == false)
             {
                 if (Input.GetAxis("Horizontal") > 0)
