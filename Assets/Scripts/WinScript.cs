@@ -8,12 +8,7 @@ public class WinScript : MonoBehaviour
     void Start()
     {
         StartCoroutine(end());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //GetComponent<AudioSource>().Play();
     }
 
     IEnumerator end()
