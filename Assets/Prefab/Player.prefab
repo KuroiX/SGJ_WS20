@@ -151,7 +151,7 @@ MonoBehaviour:
   fallMultiplier: 2
   startValue: 2
   newFallSpeed: 0.8
-  maxFallSpeed: -20
+  maxFallSpeed: -7
 --- !u!1 &7316996654071697716
 GameObject:
   m_ObjectHideFlags: 0
