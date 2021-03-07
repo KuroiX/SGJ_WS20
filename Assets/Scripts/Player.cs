@@ -221,6 +221,7 @@ public class Player : MonoBehaviour
         }
        
         rb.velocity = new Vector2(0, 0);
+        Refresher.RefreshRefreshers();
         ResetQueue(ActionList);
         StartCoroutine(WaitAfterDeath());
     }
