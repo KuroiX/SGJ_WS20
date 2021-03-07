@@ -222,7 +222,6 @@ public class Player : MonoBehaviour
        
         rb.velocity = new Vector2(0, 0);
         ResetQueue(ActionList);
-        UIManager.Instance.SetUI(ActionList);
         StartCoroutine(WaitAfterDeath());
     }
 
@@ -297,6 +296,12 @@ public class Player : MonoBehaviour
         {
             ActionQueue.Enqueue(actions[i]);
         }
+        UIManager.Instance.SetUI(ActionList);
+    }
+
+    public void ResetQueue()
+    {
+        ResetQueue(ActionList);
     }
 
     public void ArriveAtStation(ActionStation station)
