@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - Player
+  - 
   - 
   - 
   - 
@@ -41,12 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Hazard
-    uniqueID: 606281665
+  - name: Hazards
+    uniqueID: 3314768959
     locked: 0
   - name: Environment
-    uniqueID: 967714519
+    uniqueID: 4084074063
     locked: 0
   - name: Player
-    uniqueID: 3367898243
+    uniqueID: 1314307285
     locked: 0
