@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Refresher : MonoBehaviour
 {
+    public Color colorActivated;
+
     public static List<Refresher> refreshers;
 
     private void Start()
@@ -35,7 +37,7 @@ public class Refresher : MonoBehaviour
     private void Enable()
     {
         isEnabled = true;
-        GetComponent<SpriteRenderer>().color = new Color(143, 255, 141, 255);
+        GetComponent<SpriteRenderer>().color = colorActivated;
     }
 
     private void Disable()
