@@ -49,9 +49,12 @@ public class Refresher : MonoBehaviour
     // Funny name lol
     public static void RefreshRefreshers()
     {
-        foreach (var v in refreshers)
+        if (refreshers != null)
         {
-            v.Enable();
+            foreach (var v in refreshers)
+            {
+                v.Enable();
+            }
         }
     }
 }
